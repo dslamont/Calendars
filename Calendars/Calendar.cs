@@ -21,6 +21,7 @@ namespace Calendars
             ILogger log)
         {
             log.LogInformation($"{nameof(Calendar)} trigger function processed a request."); 
+            //Change
 
             string account_name = Environment.GetEnvironmentVariable("AccountName", EnvironmentVariableTarget.Process); 
             string account_key = Environment.GetEnvironmentVariable("AccountKey", EnvironmentVariableTarget.Process);
