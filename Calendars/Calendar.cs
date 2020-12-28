@@ -28,6 +28,9 @@ namespace Calendars
             string container_name = Environment.GetEnvironmentVariable("ContainerName", EnvironmentVariableTarget.Process);
             string blob_name = $"{name}.ics";
 
+
+
+
             CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials(account_name, account_key), true);
             CloudBlobClient client = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer blobContainer = client.GetContainerReference(container_name);
