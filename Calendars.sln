@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calendars", "Calendars\Calendars.csproj", "{3945F079-8EC0-4AF8-9153-60685B5FDB5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookGroup", "BookGroup\BookGroup.csproj", "{57CE712D-F90E-4312-BDA3-2312AD3DCDAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookGroup", "BookGroup\BookGroup.csproj", "{57CE712D-F90E-4312-BDA3-2312AD3DCDAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calendar", "Calendar\Calendar.csproj", "{F82A0968-CB40-4988-8112-5B9DFAC95D51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{57CE712D-F90E-4312-BDA3-2312AD3DCDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57CE712D-F90E-4312-BDA3-2312AD3DCDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57CE712D-F90E-4312-BDA3-2312AD3DCDAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F82A0968-CB40-4988-8112-5B9DFAC95D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F82A0968-CB40-4988-8112-5B9DFAC95D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F82A0968-CB40-4988-8112-5B9DFAC95D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F82A0968-CB40-4988-8112-5B9DFAC95D51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
