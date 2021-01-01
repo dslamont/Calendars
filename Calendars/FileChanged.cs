@@ -20,7 +20,6 @@ namespace Calendars
         {
             log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
 
-
             string account_name = Environment.GetEnvironmentVariable("AccountName", EnvironmentVariableTarget.Process);
             string account_key = Environment.GetEnvironmentVariable("AccountKey", EnvironmentVariableTarget.Process);
             string container_name = Environment.GetEnvironmentVariable("ContainerName", EnvironmentVariableTarget.Process);
@@ -37,15 +36,14 @@ namespace Calendars
                     CloudBlockBlob calBlob = blobContainer.GetBlockBlobReference(blob_name);
 
                     Schedule schedule = await JsonSerializer.DeserializeAsync<Schedule>(myBlob);
-                    Convertor convertor = new Convertor();
+                    BookGroupConvertor convertor = new BookGroupConvertor();
                     string calText = convertor.CreateCalendar(schedule);
-
 
                     using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(calText)))
                     {
-
                         await calBlob.UploadFromStreamAsync(ms);
                     }
+
                     break;
             }
         }

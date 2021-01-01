@@ -9,5 +9,8 @@ namespace BookGroup
         public string Author { get; set; }
         public string BookUrl { get; set; }
         public string CoverImageUrl { get; set; }
+        public string OrganizerName { get; set; }
+        public string OrganizerEmail { get; set; }
+        public int UpdateCount { get; set; }
     }
 }

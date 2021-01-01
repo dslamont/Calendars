@@ -44,6 +44,11 @@ namespace Calendars
             meeting.BookUrl = "https://www.goodreads.com/book/show/34200289-eleanor-oliphant-is-completely-fine";
             meeting.CoverImageUrl = "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540909460l/34200289._SY475_.jpg";
 
+            meeting.OrganizerName = "Don Lamont";
+            meeting.OrganizerEmail = "don.lamont@e-pict.net";
+
+            meeting.UpdateCount = 1;
+
             Schedule schedule = new Schedule();
             schedule.Meetings = new List<Meeting> { meeting };
 
