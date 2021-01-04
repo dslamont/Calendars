@@ -11,6 +11,7 @@ namespace BookGroup
         public string CoverImageUrl { get; set; }
         public string OrganizerName { get; set; }
         public string OrganizerEmail { get; set; }
+        public string Location { get; set; }
         public int UpdateCount { get; set; }
     }
 }

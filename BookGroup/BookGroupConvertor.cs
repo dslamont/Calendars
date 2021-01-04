@@ -1,6 +1,7 @@
 ﻿using Calendar;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace BookGroup
 {
@@ -58,6 +59,12 @@ namespace BookGroup
                 vEvent.Summary = $"SUMMARY:{meeting.Title} - {meeting.Author}";
                 string desc = CreateDescription(meeting);
                 vEvent.Description = $"DESCRIPTION:{desc}";
+
+
+                string htmlDesc = CreateDescriptionHTML(meeting);
+                vEvent.DescriptionHTML = $"X-ALT-DESC;FMTTYPE=text/html:{htmlDesc}";
+
+                vEvent.Location = $"LOCATION:{meeting.Location}";
                 vEvent.Status = "STATUS:CONFIRMED";
                 vEvent.Sequence = $"SEQUENCE:{meeting.UpdateCount}";
                 vEvent.Transparency = "TRANSP:TRANSPARENT";
@@ -94,5 +101,31 @@ namespace BookGroup
             return desc;
         }
 
+        protected string CreateDescriptionHTML(Meeting meeting)
+        {
+            StringBuilder  html = new StringBuilder();
+
+            if (meeting != null)
+            {
+                //desc = $"<a src=\"{meeting.BookUrl}\">{meeting.Title} -  {meeting.Author}</a>";
+                html.Append("<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 3.2//EN\">");
+                html.Append("<html>");
+                html.Append("<body>");
+                html.Append("<p>");
+
+                html.Append($"<a href=\"{meeting.BookUrl}\">");
+
+                html.Append($"<img src=\"{meeting.CoverImageUrl}\"/>");
+
+                html.Append("</a>");
+
+                html.Append("</p>");
+
+                html.Append("</body>");
+                html.Append("</html>");
+            }
+
+            return html.ToString();
+        }
     }
 }

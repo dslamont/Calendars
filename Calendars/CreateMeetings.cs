@@ -47,6 +47,7 @@ namespace Calendars
             meeting.OrganizerName = "Don Lamont";
             meeting.OrganizerEmail = "don.lamont@e-pict.net";
 
+            meeting.Location = "Ferryhill Community Centre, Albury Rd, Aberdeen AB11 6TN, UK";
             meeting.UpdateCount = 1;
 
             Schedule schedule = new Schedule();

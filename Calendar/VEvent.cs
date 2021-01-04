@@ -14,9 +14,10 @@ namespace Calendar
         public string EndTime { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
+        public string DescriptionHTML { get; set; }
         public string Sequence { get; set; }
-
         public string Status { get; set; }
+        public string Location { get; set; }
         public string Transparency { get; set; }
 
         public string Categories { get; set; }
@@ -35,6 +36,8 @@ namespace Calendar
                 writer.WriteLine(EndTime);
                 writer.WriteLine(Summary);
                 writer.WriteLine(Description);
+                writer.WriteLine(DescriptionHTML);
+                writer.WriteLine(Location);
                 writer.WriteLine(Status);
                 writer.WriteLine(Sequence);
                 writer.WriteLine(Transparency);
