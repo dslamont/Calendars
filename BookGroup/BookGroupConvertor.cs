@@ -49,7 +49,7 @@ namespace BookGroup
                 vEvent = new VEvent();
 
                 vEvent.Uid = CreateUID(meeting.StateDate);
-                vEvent.DateTimeStamp = meeting.StateDate.ToUniversalTime().ToString("yyyyMMddTHHmmssZ");
+                vEvent.DateTimeStamp = $"DTSTAMP:{meeting.StateDate.ToUniversalTime().ToString("yyyyMMddTHHmmssZ")}";
                 vEvent.Organiser = $"ORGANIZER;CN={meeting.OrganizerName}:MAILTO:{meeting.OrganizerEmail}";
 
                 vEvent.StartTime = $"DTSTART;TZID=Europe/London:{meeting.StateDate.ToUniversalTime().ToString("yyyyMMddTHHmmss")}";
@@ -75,7 +75,7 @@ namespace BookGroup
 
             if (dateTime != null)
             {
-                uid = $"ferryhill_{dateTime.Year}{dateTime.Month}{dateTime.Day}_@e-pict.net";
+                uid = $"UID:ferryhill_{dateTime.Year}{dateTime.Month}{dateTime.Day}_@e-pict.net";
             }
 
             return uid;
@@ -87,7 +87,8 @@ namespace BookGroup
 
             if (meeting != null)
             {
-                desc = $"<a src=\"{meeting.BookUrl}\">{meeting.Title} -  {meeting.Author}</a>";
+                //desc = $"<a src=\"{meeting.BookUrl}\">{meeting.Title} -  {meeting.Author}</a>";
+                desc = $"{meeting.Title} -  {meeting.Author}";
             }
 
             return desc;

@@ -6,12 +6,14 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using BookGroup;
+using System.Text;
+using System.Text.Json;
 
 namespace Calendars
 {
@@ -40,6 +42,27 @@ namespace Calendars
 
             string blobSasUrl = GetBlobSasUri(blobContainer, blob_name, null);
             Console.WriteLine(blobSasUrl);
+
+            switch (name)
+            {
+                case "book_group.json":
+
+                    string cal_blob_name = "book_group.ics";
+                    CloudBlockBlob calBlob = blobContainer.GetBlockBlobReference(cal_blob_name);
+                    calBlob.Properties.ContentType = "text/calendar"; 
+
+                    req.Body.Seek(0, SeekOrigin.Begin);
+                    Schedule schedule = await JsonSerializer.DeserializeAsync<Schedule>(req.Body);
+                    BookGroupConvertor convertor = new BookGroupConvertor();
+                    string calText = convertor.CreateCalendar(schedule);
+
+                    using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(calText)))
+                    {
+                        await calBlob.UploadFromStreamAsync(ms);
+                    }
+
+                    break;
+            }
 
             return name != null
                 ? (ActionResult)new OkObjectResult($"Uploaded {name}")

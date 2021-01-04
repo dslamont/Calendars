@@ -44,7 +44,7 @@ namespace Calendar
                 writer.WriteLine("BEGIN:STANDARD");
 
                 writer.WriteLine("TZOFFSETFROM:+0100");
-                writer.WriteLine("TZOFFSETTO:+0100");
+                writer.WriteLine("TZOFFSETTO:+0000");
                 writer.WriteLine("TZNAME:GMT");
                 writer.WriteLine("DTSTART:19701025T020000");
                 writer.WriteLine("RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU");
