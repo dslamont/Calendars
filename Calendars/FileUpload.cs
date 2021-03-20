@@ -47,14 +47,31 @@ namespace Calendars
             {
                 case "book_group.json":
 
-                    string cal_blob_name = "book_group.ics";
-                    CloudBlockBlob calBlob = blobContainer.GetBlockBlobReference(cal_blob_name);
-                    calBlob.Properties.ContentType = "text/calendar"; 
-
                     req.Body.Seek(0, SeekOrigin.Begin);
                     Schedule schedule = await JsonSerializer.DeserializeAsync<Schedule>(req.Body);
                     BookGroupConvertor convertor = new BookGroupConvertor();
-                    string calText = convertor.CreateCalendar(schedule);
+
+                    //Create the default Book Group Calendar
+
+                    string cal_blob_name = "book_group.ics";
+                    CloudBlockBlob calBlob = blobContainer.GetBlockBlobReference(cal_blob_name);
+                    calBlob.Properties.ContentType = "text/calendar";
+
+                    string calText = convertor.CreateCalendar(schedule, BookGroupCalTypeEnum.DEFAULT);
+
+                    using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(calText)))
+                    {
+                        await calBlob.UploadFromStreamAsync(ms);
+                    }
+
+
+                    //Create the FerryHill Book Group Calendar
+
+                    cal_blob_name = "book_group_web.ics";
+                    calBlob = blobContainer.GetBlockBlobReference(cal_blob_name);
+                    calBlob.Properties.ContentType = "text/calendar";
+
+                    calText = convertor.CreateCalendar(schedule, BookGroupCalTypeEnum.WEBSITE);
 
                     using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(calText)))
                     {
@@ -98,5 +115,6 @@ namespace Calendars
             // Return the URI string for the container, including the SAS token.
             return blob.Uri + sasBlobToken;
         }
+
     }
 }

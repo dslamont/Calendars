@@ -1,3 +1,4 @@
+using Bins;
 using BookGroup;
 using Calendar;
 using Microsoft.AspNetCore.Http;
@@ -31,19 +32,18 @@ namespace Calendars
             string account_name = Environment.GetEnvironmentVariable("AccountName", EnvironmentVariableTarget.Process); 
             string account_key = Environment.GetEnvironmentVariable("AccountKey", EnvironmentVariableTarget.Process);
             string container_name = Environment.GetEnvironmentVariable("ContainerName", EnvironmentVariableTarget.Process);
-            string blob_name = "bins.ics";
-
+            
+            
             CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials(account_name, account_key), true);
             CloudBlobClient client = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer blobContainer = client.GetContainerReference(container_name);
-            CloudBlockBlob myblob = blobContainer.GetBlockBlobReference(blob_name);
 
-            VCalendar calendar = new VCalendar();
-            calendar.TimeZone = new VTimeZone();
-            calendar.Events = CreateEvents();
-            string calendarText = calendar.CreateCalendarText();
+            //Create the Black Bins Calendar
+            string black_bins_blob_name = "black_bins.ics";
+            CloudBlockBlob blackBinsBlob = blobContainer.GetBlockBlobReference(black_bins_blob_name);
+            string calendarText = Bins.BinDays.CreateBlackBinDays();
 
-            CloudBlockBlob calBlob = blobContainer.GetBlockBlobReference(blob_name);
+            CloudBlockBlob calBlob = blobContainer.GetBlockBlobReference(black_bins_blob_name);
             calBlob.Properties.ContentType = "text/calendar";
 
             using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(calendarText)))
@@ -51,72 +51,84 @@ namespace Calendars
                 await calBlob.UploadFromStreamAsync(ms);
             }
 
-            return new OkObjectResult($"Created {blob_name}");
-        }
-
-        protected List<VEvent> CreateEvents()
-        {
-            List<VEvent> events = new List<VEvent>();
-
-            DateTime currentDate = new DateTime(2021, 01, 13, 0, 0, 0);
-            DateTime endDate = new DateTime(2021, 08, 30, 0, 0, 0);
-            int loopIndex = 0;
-            while(currentDate<endDate)
+            //Create the Recycling Bins Calendar
+            string recycling_bins_blob_name = "recycling_bins.ics";
+            CloudBlockBlob recyclingBinsBlob = blobContainer.GetBlockBlobReference(recycling_bins_blob_name);
+            recyclingBinsBlob.Properties.ContentType = "text/calendar";
+            calendarText = BinDays.CreateRecyclingBinDays();
+            
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(calendarText)))
             {
-                bool isBlackBins = (loopIndex % 2) == 0;
-                VEvent vEvent = CreateEvent(currentDate, isBlackBins);
-                events.Add(vEvent);
-
-                currentDate = currentDate.AddDays(7);
-                loopIndex++;
+                await recyclingBinsBlob.UploadFromStreamAsync(ms);
             }
 
-            return events;
+            return new OkObjectResult("Created calendars");
         }
 
-        protected VEvent CreateEvent(DateTime date, bool blackBins)
-        {
-            VEvent vEvent = null;
+        //protected List<VEvent> CreateEvents()
+        //{
+        //    List<VEvent> events = new List<VEvent>();
 
-            vEvent = new VEvent();
+        //    DateTime currentDate = new DateTime(2021, 01, 13, 0, 0, 0);
+        //    DateTime endDate = new DateTime(2021, 08, 30, 0, 0, 0);
 
-            vEvent.Uid = CreateUID(date);
-            vEvent.DateTimeStamp = $"DTSTAMP:{date.ToUniversalTime().ToString("yyyyMMddTHHmmssZ")}";
-            vEvent.Organiser = "ORGANIZER;CN=Don Lamont:MAILTO:don.lamont@e-pict.net";
+        //    int loopIndex = 0;
+        //    while(currentDate<endDate)
+        //    {
+        //        bool isBlackBins = (loopIndex % 2) == 0;
+        //        VEvent vEvent = CreateEvent(currentDate, isBlackBins);
+        //        events.Add(vEvent);
 
-            vEvent.StartTime = $"DTSTART;TZID=Europe/London:{date.ToUniversalTime().ToString("yyyyMMddTHHmmss")}";
-            vEvent.EndTime = $"DTEND;TZID=Europe/London:{date.AddDays(1).ToUniversalTime().ToString("yyyyMMddTHHmmss")}";
+        //        currentDate = currentDate.AddDays(7);
+        //        loopIndex++;
+        //    }
 
-            if (blackBins)
-            {
-                vEvent.Summary = "SUMMARY:Black Bins";
-                vEvent.Description = "DESCRIPTION:Black Bins";
-            }
-            else
-            {
-                vEvent.Summary = "SUMMARY:Recycling Bins";
-                vEvent.Description = "DESCRIPTION:Recycling Bins";
-            }
-            vEvent.Status = "STATUS:CONFIRMED";
-            vEvent.Sequence = "SEQUENCE:1";
-            vEvent.Transparency = "TRANSP:TRANSPARENT";
-            vEvent.Categories = "CATEGORIES:Refuse,Recycling";
-            vEvent.Class = "CLASS:PUBLIC";
+        //    return events;
+        //}
 
-            return vEvent;
-        }
+        //protected VEvent CreateEvent(DateTime date, bool blackBins)
+        //{
+        //    VEvent vEvent = null;
 
-        protected string CreateUID(DateTime dateTime)
-        {
-            string uid = String.Empty;
+        //    vEvent = new VEvent();
 
-            if (dateTime != null)
-            {
-                uid = $"UID:bins_{dateTime.Year}{dateTime.Month}{dateTime.Day}_@e-pict.net";
-            }
+        //    vEvent.Uid = CreateUID(date);
+        //    vEvent.DateTimeStamp = $"DTSTAMP:{date.ToString("yyyyMMddTHHmmssZ")}";
+        //    vEvent.Organiser = "ORGANIZER;CN=Don Lamont:MAILTO:don.lamont@e-pict.net";
 
-            return uid;
-        }
+        //    vEvent.StartTime = $"DTSTART;TZID=Europe/London:{date.ToString("yyyyMMddTHHmmss")}";
+        //    vEvent.EndTime = $"DTEND;TZID=Europe/London:{date.AddDays(1).AddMinutes(-1).ToString("yyyyMMddTHHmmss")}";
+
+        //    if (blackBins)
+        //    {
+        //        vEvent.Summary = "SUMMARY:Black Bins";
+        //        vEvent.Description = "DESCRIPTION:Black Bins";
+        //    }
+        //    else
+        //    {
+        //        vEvent.Summary = "SUMMARY:Recycling Bins";
+        //        vEvent.Description = "DESCRIPTION:Recycling Bins";
+        //    }
+        //    vEvent.Status = "STATUS:CONFIRMED";
+        //    vEvent.Sequence = "SEQUENCE:1";
+        //    vEvent.Transparency = "TRANSP:TRANSPARENT";
+        //    vEvent.Categories = "CATEGORIES:Refuse,Recycling";
+        //    vEvent.Class = "CLASS:PUBLIC";
+
+        //    return vEvent;
+        //}
+
+        //protected string CreateUID(DateTime dateTime)
+        //{
+        //    string uid = String.Empty;
+
+        //    if (dateTime != null)
+        //    {
+        //        uid = $"UID:bins_{dateTime.Year}{dateTime.Month}{dateTime.Day}_@e-pict.net";
+        //    }
+
+        //    return uid;
+        //}
         private static string GetBlobSasUri(CloudBlobContainer container, string blobName, string policyName = null)
         {
             string sasBlobToken;

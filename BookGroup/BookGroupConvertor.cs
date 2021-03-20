@@ -7,7 +7,7 @@ namespace BookGroup
 {
     public class BookGroupConvertor
     {
-        public string CreateCalendar(Schedule schedule)
+        public string CreateCalendar(Schedule schedule, BookGroupCalTypeEnum calType)
         {
             string calendarText = string.Empty;
 
@@ -15,14 +15,14 @@ namespace BookGroup
             {
                 VCalendar calendar = new VCalendar();
                 calendar.TimeZone = new VTimeZone();
-                calendar.Events = CreateEvents(schedule.Meetings);
+                calendar.Events = CreateEvents(schedule.Meetings, calType);
                 calendarText = calendar.CreateCalendarText();
             }
 
             return calendarText;
         }
 
-        protected List<VEvent> CreateEvents(List<Meeting> meetings)
+        protected List<VEvent> CreateEvents(List<Meeting> meetings, BookGroupCalTypeEnum calType)
         {
             List<VEvent> events = new List<VEvent>();
 
@@ -30,7 +30,7 @@ namespace BookGroup
             {
                 foreach (Meeting meeting in meetings)
                 {
-                    VEvent vEvent = CreateEvent(meeting);
+                    VEvent vEvent = CreateEvent(meeting, calType);
                     if (vEvent != null)
                     {
                         events.Add(vEvent);
@@ -41,7 +41,7 @@ namespace BookGroup
             return events;
         }
 
-        protected VEvent CreateEvent(Meeting meeting)
+        protected VEvent CreateEvent(Meeting meeting, BookGroupCalTypeEnum calType)
         {
             VEvent vEvent = null;
 
@@ -50,11 +50,12 @@ namespace BookGroup
                 vEvent = new VEvent();
 
                 vEvent.Uid = CreateUID(meeting.StateDate);
-                vEvent.DateTimeStamp = $"DTSTAMP:{meeting.StateDate.ToUniversalTime().ToString("yyyyMMddTHHmmssZ")}";
+                vEvent.DateTimeStamp = $"DTSTAMP:{CreateDateTimeString(meeting.StateDate, calType)}";
                 vEvent.Organiser = $"ORGANIZER;CN={meeting.OrganizerName}:MAILTO:{meeting.OrganizerEmail}";
 
-                vEvent.StartTime = $"DTSTART;TZID=Europe/London:{meeting.StateDate.ToUniversalTime().ToString("yyyyMMddTHHmmss")}";
-                vEvent.EndTime = $"DTEND;TZID=Europe/London:{meeting.StateDate.AddMinutes(90).ToUniversalTime().ToString("yyyyMMddTHHmmss")}";
+
+                vEvent.StartTime = $"DTSTART;TZID=Europe/London:{CreateDateTimeString(meeting.StateDate, calType)}";
+                vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(meeting.StateDate.AddMinutes(90),calType)}";
 
                 vEvent.Summary = $"SUMMARY:{meeting.Title} - {meeting.Author}";
                 string desc = CreateDescription(meeting);
@@ -103,7 +104,7 @@ namespace BookGroup
 
         protected string CreateDescriptionHTML(Meeting meeting)
         {
-            StringBuilder  html = new StringBuilder();
+            StringBuilder html = new StringBuilder();
 
             if (meeting != null)
             {
@@ -126,6 +127,24 @@ namespace BookGroup
             }
 
             return html.ToString();
+        }
+
+        protected string CreateDateTimeString(DateTime dateTime, BookGroupCalTypeEnum calType)
+        {
+            string dateTimeString = String.Empty;
+
+            switch(calType)
+            {
+                case BookGroupCalTypeEnum.WEBSITE:
+                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+                    break;
+                default:
+                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+                    break;
+            }
+
+            return dateTimeString;
+
         }
     }
 }
