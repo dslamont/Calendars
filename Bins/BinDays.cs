@@ -12,8 +12,8 @@ namespace Bins
 
             List<VEvent> events = new List<VEvent>();
 
-            DateTime currentDate = new DateTime(2021, 03, 10, 0, 0, 0);
-            DateTime endDate = new DateTime(2021, 05, 01, 0, 0, 0);
+            DateTime currentDate = new DateTime(2021, 06, 4, 0, 0, 0);
+            DateTime endDate = new DateTime(2022, 05, 27, 0, 0, 0);
 
             int loopIndex = 0;
             while (currentDate < endDate)
@@ -39,8 +39,8 @@ namespace Bins
 
             List<VEvent> events = new List<VEvent>();
 
-            DateTime currentDate = new DateTime(2021, 03, 17, 0, 0, 0);
-            DateTime endDate = new DateTime(2021, 05, 01, 0, 0, 0);
+            DateTime currentDate = new DateTime(2021, 05, 28, 0, 0, 0);
+            DateTime endDate = new DateTime(2022, 06, 03, 0, 0, 0);
 
             int loopIndex = 0;
             while (currentDate < endDate)
