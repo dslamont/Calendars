@@ -49,7 +49,7 @@ namespace BookGroup
             {
                 vEvent = new VEvent();
 
-                vEvent.Uid = CreateUID(meeting.StateDate);
+                vEvent.Uid = CreateUID(meeting.Id);
                 vEvent.DateTimeStamp = $"DTSTAMP:{CreateDateTimeString(meeting.StateDate, calType)}";
                 vEvent.Organiser = $"ORGANIZER;CN={meeting.OrganizerName}:MAILTO:{meeting.OrganizerEmail}";
 
@@ -77,14 +77,9 @@ namespace BookGroup
             return vEvent;
         }
 
-        protected string CreateUID(DateTime dateTime)
+        protected string CreateUID(string id)
         {
-            string uid = String.Empty;
-
-            if (dateTime != null)
-            {
-                uid = $"UID:ferryhill_{dateTime.Year}{dateTime.Month}{dateTime.Day}_@e-pict.net";
-            }
+            string uid = $"UID:ferryhill_{id}_@e-pict.net";
 
             return uid;
         }

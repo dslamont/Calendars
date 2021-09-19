@@ -4,6 +4,7 @@ namespace BookGroup
 {
     public class Meeting
     {
+        public string Id { get; set; }
         public DateTime StateDate { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
