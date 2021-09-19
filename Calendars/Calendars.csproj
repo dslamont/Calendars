@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bins\Bins.csproj" />
     <ProjectReference Include="..\BookGroup\BookGroup.csproj" />
+    <ProjectReference Include="..\OpenUniversity\OpenUniversity.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
