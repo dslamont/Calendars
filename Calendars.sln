@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calendars", "Calendars\Calendars.csproj", "{3945F079-8EC0-4AF8-9153-60685B5FDB5B}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calendar", "Calendar\Calend
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bins", "Bins\Bins.csproj", "{517336A5-309D-456F-B073-B832FA1530DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenUniversity", "OpenUniversity\OpenUniversity.csproj", "{B3A4C367-886A-429C-9CE3-FAD23FDE3D75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenUniversity", "OpenUniversity\OpenUniversity.csproj", "{B3A4C367-886A-429C-9CE3-FAD23FDE3D75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OUConsoleApp", "OUConsoleApp\OUConsoleApp.csproj", "{203910BF-521D-4229-926E-8535E02327DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B3A4C367-886A-429C-9CE3-FAD23FDE3D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3A4C367-886A-429C-9CE3-FAD23FDE3D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3A4C367-886A-429C-9CE3-FAD23FDE3D75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203910BF-521D-4229-926E-8535E02327DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203910BF-521D-4229-926E-8535E02327DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203910BF-521D-4229-926E-8535E02327DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203910BF-521D-4229-926E-8535E02327DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
