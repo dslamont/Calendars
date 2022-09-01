@@ -15,7 +15,7 @@ namespace OpenUniversity
             {
                 VCalendar calendar = new VCalendar();
                 calendar.TimeZone = new VTimeZone();
-                calendar.Events = CreateEvents(feed.Meetings, calType);
+                calendar.Events = CreateEvents(feed);
                 calendarText = calendar.CreateCalendarText();
             }
 
@@ -32,7 +32,7 @@ namespace OpenUniversity
                 {
                     foreach (OUEvent ouEvent in feed.Events)
                     {
-                        VEvent vEvent = CreateEvent(ouEvent, calType);
+                        VEvent vEvent = CreateEvent(ouEvent);
                         if (vEvent != null)
                         {
                             events.Add(vEvent);
@@ -44,33 +44,33 @@ namespace OpenUniversity
             return events;
         }
 
-        protected VEvent CreateEvent(Meeting meeting, BookGroupCalTypeEnum calType)
+        protected VEvent CreateEvent(OUEvent ouEvent)
         {
             VEvent vEvent = null;
 
-            if (meeting != null)
+            if (ouEvent != null)
             {
                 vEvent = new VEvent();
 
-                vEvent.Uid = CreateUID(meeting.Id);
-                vEvent.DateTimeStamp = $"DTSTAMP:{CreateDateTimeString(meeting.StateDate, calType)}";
-                vEvent.Organiser = $"ORGANIZER;CN={meeting.OrganizerName}:MAILTO:{meeting.OrganizerEmail}";
+                vEvent.Uid = CreateUID(ouEvent.Id);
+                vEvent.DateTimeStamp = $"DTSTAMP:{CreateDateTimeString(ouEvent.StateDate)}";
+                vEvent.Organiser = $"ORGANIZER;CN={ouEvent.OrganizerName}:MAILTO:{ouEvent.OrganizerEmail}";
 
 
-                vEvent.StartTime = $"DTSTART;TZID=Europe/London:{CreateDateTimeString(meeting.StateDate, calType)}";
-                vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(meeting.StateDate.AddMinutes(90), calType)}";
+                vEvent.StartTime = $"DTSTART;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate)}";
+                vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate.AddMinutes(90))}";
 
-                vEvent.Summary = $"SUMMARY:{meeting.Title} - {meeting.Author}";
-                string desc = CreateDescription(meeting);
+                vEvent.Summary = $"SUMMARY:{ouEvent.Title}";
+                string desc = CreateDescription(ouEvent);
                 vEvent.Description = $"DESCRIPTION:{desc}";
 
 
-                string htmlDesc = CreateDescriptionHTML(meeting);
+                string htmlDesc = CreateDescriptionHTML(ouEvent);
                 vEvent.DescriptionHTML = $"X-ALT-DESC;FMTTYPE=text/html:{htmlDesc}";
 
-                vEvent.Location = $"LOCATION:{meeting.Location}";
+                vEvent.Location = $"LOCATION:[TODO: Location Goes Here]";
                 vEvent.Status = "STATUS:CONFIRMED";
-                vEvent.Sequence = $"SEQUENCE:{meeting.UpdateCount}";
+                vEvent.Sequence = $"SEQUENCE:{ouEvent.UpdateCount}";
                 vEvent.Transparency = "TRANSP:TRANSPARENT";
                 vEvent.Categories = "CATEGORIES:Book Group";
                 vEvent.Class = "CLASS:PUBLIC";
@@ -87,24 +87,24 @@ namespace OpenUniversity
             return uid;
         }
 
-        protected string CreateDescription(Meeting meeting)
+        protected string CreateDescription(OUEvent ouEvent)
         {
             string desc = String.Empty;
 
-            if (meeting != null)
+            if (ouEvent != null)
             {
                 //desc = $"<a src=\"{meeting.BookUrl}\">{meeting.Title} -  {meeting.Author}</a>";
-                desc = $"{meeting.Title} -  {meeting.Author}";
+                desc = $"{ouEvent.Title}";
             }
 
             return desc;
         }
 
-        protected string CreateDescriptionHTML(Meeting meeting)
+        protected string CreateDescriptionHTML(OUEvent ouEvent)
         {
             StringBuilder html = new StringBuilder();
 
-            if (meeting != null)
+            if (ouEvent != null)
             {
                 //desc = $"<a src=\"{meeting.BookUrl}\">{meeting.Title} -  {meeting.Author}</a>";
                 html.Append("<!DOCTYPE HTML PUBLIC \" -//W3C//DTD HTML 3.2//EN\">");
@@ -112,11 +112,7 @@ namespace OpenUniversity
                 html.Append("<body>");
                 html.Append("<p>");
 
-                html.Append($"<a href=\"{meeting.BookUrl}\">");
-
-                html.Append($"<img src=\"{meeting.CoverImageUrl}\"/>");
-
-                html.Append("</a>");
+                html.Append("[TODO: Link Goes Here]");
 
                 html.Append("</p>");
 
@@ -127,19 +123,21 @@ namespace OpenUniversity
             return html.ToString();
         }
 
-        protected string CreateDateTimeString(DateTime dateTime, BookGroupCalTypeEnum calType)
+        protected string CreateDateTimeString(DateTime dateTime)
         {
             string dateTimeString = String.Empty;
 
-            switch (calType)
-            {
-                case BookGroupCalTypeEnum.WEBSITE:
-                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
-                    break;
-                default:
-                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
-                    break;
-            }
+            //switch (calType)
+            //{
+            //    case BookGroupCalTypeEnum.WEBSITE:
+            //        dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+            //        break;
+            //    default:
+            //        dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+            //        break;
+            //}
+
+            dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
 
             return dateTimeString;
 
