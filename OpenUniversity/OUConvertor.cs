@@ -137,7 +137,7 @@ namespace OpenUniversity
             //        break;
             //}
 
-            dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+            dateTimeString = dateTime.ToString("yyyyMMddTHHmmss");
 
             return dateTimeString;
 

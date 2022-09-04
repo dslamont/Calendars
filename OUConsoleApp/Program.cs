@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using OpenUniversity;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 Console.WriteLine("Hello, OU Feed!");
 
@@ -24,3 +25,10 @@ string fileName = "M248.json";
 using FileStream createStream = File.Create(fileName);
 await JsonSerializer.SerializeAsync(createStream, feed);
 await createStream.DisposeAsync();
+
+//Create the ics calendar file
+OUConvertor convertor = new OUConvertor();
+string calendar = convertor.CreateCalendar(feed);
+
+//Save the ics file
+await File.WriteAllTextAsync("M248.ics", calendar);
