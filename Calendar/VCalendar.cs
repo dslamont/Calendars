@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace Calendar
         }
 
 
-        public string CreateCalendarText()
+        public string CreateCalendarText(string title)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -38,7 +39,8 @@ namespace Calendar
             writer.WriteLine("BEGIN:VCALENDAR");
             writer.WriteLine("VERSION:2.0");
             writer.WriteLine("PRODID:-//e-pict.net/calendars//NONSGML v1.0//EN");
-            writer.WriteLine("X-WR-RELCALID:book_group_cal@e-pict.net");
+            string id = !string.IsNullOrEmpty(title) ? title.ToLower() : String.Empty;
+            writer.WriteLine($"X-WR-RELCALID:ou_{id}_cal@e-pict.net");
 
             if (TimeZone != null)
             {
