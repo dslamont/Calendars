@@ -16,7 +16,7 @@ namespace OpenUniversity
                 VCalendar calendar = new VCalendar();
                 calendar.TimeZone = new VTimeZone();
                 calendar.Events = CreateEvents(feed);
-                calendarText = calendar.CreateCalendarText();
+                calendarText = calendar.CreateCalendarText(feed.Module.Code);
             }
 
             return calendarText;
@@ -58,7 +58,7 @@ namespace OpenUniversity
 
 
                 vEvent.StartTime = $"DTSTART;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate)}";
-                vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate.AddMinutes(90))}";
+                vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate.AddDays(1))}";
 
                 vEvent.Summary = $"SUMMARY:{ouEvent.Title}";
                 string desc = CreateDescription(ouEvent);
@@ -82,7 +82,7 @@ namespace OpenUniversity
 
         protected string CreateUID(string id)
         {
-            string uid = $"UID:ferryhill_{id}_@e-pict.net";
+            string uid = $"UID:ou_{id}_@e-pict.net";
 
             return uid;
         }
