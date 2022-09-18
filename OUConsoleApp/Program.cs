@@ -3,32 +3,30 @@ using OpenUniversity;
 using System.Text.Json;
 using static System.Net.Mime.MediaTypeNames;
 
-Console.WriteLine("Hello, OU Feed!");
+Console.WriteLine("Creating OU Feeds!");
 
-OUFeed feed = new OUFeed();
-OUModule moduleDetails = new OUModule();
-moduleDetails.Code = "M248";
-moduleDetails.Title = "Analysing Data";
-feed.Module = moduleDetails;
-
-OUEvent ouEvent = new OUEvent();
-ouEvent.Id = "20220906";
-ouEvent.StateDate = DateTime.Parse("2022-09-06T00:00:00");
-ouEvent.Title = "Website Opens";
-ouEvent.OrganizerName = "Don Lamont";
-ouEvent.OrganizerEmail = "don.lamont@e-pict.net";
-ouEvent.UpdateCount = 1;
-
-feed.Events.Add(ouEvent);
-
-string fileName = "M248.json";
-using FileStream createStream = File.Create(fileName);
-await JsonSerializer.SerializeAsync(createStream, feed);
-await createStream.DisposeAsync();
-
-//Create the ics calendar file
 OUConvertor convertor = new OUConvertor();
-string calendar = convertor.CreateCalendar(feed);
 
-//Save the ics file
-await File.WriteAllTextAsync("M248.ics", calendar);
+//Create a M248 Calendar
+string m248FileName = "C:\\Users\\donla\\Dropbox\\Projects\\Development\\Calendars\\M248.json";
+using FileStream openStream = File.OpenRead(m248FileName);
+OUFeed? m248Schedule = await JsonSerializer.DeserializeAsync<OUFeed>(openStream);
+if (m248Schedule is not null)
+{
+    //Create a calendar feed
+    string m248CalFilePath = "C:\\Users\\donla\\Dropbox\\Projects\\Development\\Calendars\\M248.ics";
+    string m248calendar = convertor.CreateCalendar(m248Schedule);
+    await File.WriteAllTextAsync(m248CalFilePath, m248calendar);
+}
+
+//Create a M269 Calendar
+string m269FileName = "C:\\Users\\donla\\Dropbox\\Projects\\Development\\Calendars\\M248.json";
+using FileStream m269Stream = File.OpenRead(m269FileName);
+OUFeed? m269Schedule = await JsonSerializer.DeserializeAsync<OUFeed>(m269Stream);
+if (m269Schedule is not null)
+{
+    //Create a calendar feed
+    string m269CalFilePath = "C:\\Users\\donla\\Dropbox\\Projects\\Development\\Calendars\\M269.ics";
+    string m269calendar = convertor.CreateCalendar(m269Schedule);
+    await File.WriteAllTextAsync(m269CalFilePath, m269calendar);
+}

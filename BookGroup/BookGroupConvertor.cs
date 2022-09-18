@@ -131,10 +131,12 @@ namespace BookGroup
             switch(calType)
             {
                 case BookGroupCalTypeEnum.WEBSITE:
-                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+                    //dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmss");
                     break;
                 default:
-                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+                    //dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
+                    dateTimeString = dateTime.ToString("yyyyMMddTHHmmss");
                     break;
             }
 
