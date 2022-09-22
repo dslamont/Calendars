@@ -28,7 +28,7 @@ namespace Bins
             VCalendar calendar = new VCalendar();
             calendar.TimeZone = new VTimeZone();
             calendar.Events = events;
-            calendarText = calendar.CreateCalendarText();
+            calendarText = calendar.CreateCalendarText(String.Empty);
             
             return calendarText;
         }
@@ -55,7 +55,7 @@ namespace Bins
             VCalendar calendar = new VCalendar();
             calendar.TimeZone = new VTimeZone();
             calendar.Events = events;
-            calendarText = calendar.CreateCalendarText();
+            calendarText = calendar.CreateCalendarText(String.Empty);
 
             return calendarText;
         }

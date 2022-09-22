@@ -57,8 +57,11 @@ namespace OpenUniversity
                 vEvent.Organiser = $"ORGANIZER;CN={ouEvent.OrganizerName}:MAILTO:{ouEvent.OrganizerEmail}";
 
 
-                vEvent.StartTime = $"DTSTART;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate)}";
-                vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate.AddDays(1))}";
+                //vEvent.StartTime = $"DTSTART;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate)}";
+                //vEvent.EndTime = $"DTEND;TZID=Europe/London:{CreateDateTimeString(ouEvent.StateDate.AddDays(1))}";
+                vEvent.StartTime = $"DTSTART;TZID=Europe/London:{ouEvent.StateDate.ToString("yyyyMMdd")}";
+                vEvent.EndTime = $"DTEND;TZID=Europe/London:{ouEvent.StateDate.AddDays(1).ToString("yyyyMMdd")}";
+
 
                 vEvent.Summary = $"SUMMARY:{ouEvent.Title}";
                 string desc = CreateDescription(ouEvent);

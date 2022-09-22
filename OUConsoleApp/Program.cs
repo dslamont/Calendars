@@ -20,7 +20,7 @@ if (m248Schedule is not null)
 }
 
 //Create a M269 Calendar
-string m269FileName = "C:\\Users\\donla\\Dropbox\\Projects\\Development\\Calendars\\M248.json";
+string m269FileName = "C:\\Users\\donla\\Dropbox\\Projects\\Development\\Calendars\\M269.json";
 using FileStream m269Stream = File.OpenRead(m269FileName);
 OUFeed? m269Schedule = await JsonSerializer.DeserializeAsync<OUFeed>(m269Stream);
 if (m269Schedule is not null)
