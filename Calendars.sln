@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenUniversity", "OpenUnive
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OUConsoleApp", "OUConsoleApp\OUConsoleApp.csproj", "{203910BF-521D-4229-926E-8535E02327DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookGroiupConsoleApp", "BookGroiupConsoleApp\BookGroiupConsoleApp.csproj", "{0079E399-F614-48FA-8157-38BB51506AF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookGroiupConsoleApp", "BookGroiupConsoleApp\BookGroiupConsoleApp.csproj", "{0079E399-F614-48FA-8157-38BB51506AF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

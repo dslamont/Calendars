@@ -16,7 +16,7 @@ namespace BookGroup
                 VCalendar calendar = new VCalendar();
                 calendar.TimeZone = new VTimeZone();
                 calendar.Events = CreateEvents(schedule.Meetings, calType);
-                calendarText = calendar.CreateCalendarText();
+                calendarText = calendar.CreateCalendarText(String.Empty);
             }
 
             return calendarText;

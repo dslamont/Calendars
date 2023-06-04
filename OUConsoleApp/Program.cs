@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using OpenUniversity;
 using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 Console.WriteLine("Creating OU Feeds!");
 
