@@ -30,7 +30,7 @@ namespace Calendar
         }
 
 
-        public string CreateCalendarText(string title)
+        public string CreateCalendarText(string calId)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -39,8 +39,7 @@ namespace Calendar
             writer.WriteLine("BEGIN:VCALENDAR");
             writer.WriteLine("VERSION:2.0");
             writer.WriteLine("PRODID:-//e-pict.net/calendars//NONSGML v1.0//EN");
-            string id = !string.IsNullOrEmpty(title) ? title.ToLower() : String.Empty;
-            writer.WriteLine($"X-WR-RELCALID:ou_{id}_cal@e-pict.net");
+            writer.WriteLine($"X-WR-RELCALID:{calId}");
 
             if (TimeZone != null)
             {
